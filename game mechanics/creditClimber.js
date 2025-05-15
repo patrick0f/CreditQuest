@@ -5,7 +5,8 @@ const btnGood = document.getElementById('btnGood');
 const btnBad = document.getElementById('btnBad');
 const questionText = document.getElementById('question');
 const scoreText = document.getElementById('score');
-const playerImage = document.getElementById('playerImage'); // Fixed: Now exists in HTML
+const playerImage = document.getElementById('playerImage');
+const timerText = document.getElementById('timer'); // Corrected to match HTML
 
 const questions = [
   { prompt: "Pay your bill on time?", good: true },
@@ -22,15 +23,16 @@ let score = 0;
 let platforms = [{ x: 100, y: 280, width: 200, height: 15 }];
 
 // Player properties
-let playerX = 180; // Added horizontal position
+let playerX = 180;
 let playerY = platforms[platforms.length - 1].y - 40;
-let velocityX = 0; // Added horizontal velocity
+let velocityX = 0;
 let velocityY = 0;
 const gravity = 1.5;
 let jumping = false;
 let onLand = null;
 let breakingPlatforms = [];
-
+let timeLeft = 15;
+let timerInterval = null;
 
 function setButtonsEnabled(enabled) {
   btnGood.disabled = !enabled;
@@ -38,9 +40,9 @@ function setButtonsEnabled(enabled) {
 }
 
 playerImage.onload = function() {
-  // start game only after the image loads
   questionText.textContent = questions[currentQuestion].prompt;
   scoreText.textContent = 'Score: 0';
+  resetTimer();
   draw();
   update();
 };
@@ -48,13 +50,13 @@ playerImage.onload = function() {
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  //draw platforms
+  // draw platforms
   for (const p of platforms) {
     ctx.fillStyle = '#6ce26c';
     ctx.fillRect(p.x, p.y, p.width, p.height);
   }
 
-  //breaking platforms
+  // breaking platforms animation
   for (let i = 0; i < breakingPlatforms.length; i++) {
     const bp = breakingPlatforms[i];
     if (bp.frames > 0) {
@@ -67,43 +69,42 @@ function draw() {
     }
   }
 
-  if (playerImage.complete) { // ensure image is loaded
+  if (playerImage.complete) {
     ctx.drawImage(playerImage, playerX, playerY, 40, 40);
   }
 }
 
-
-
 function jump(callback) {
   if (!jumping) {
-    velocityY = -18;         
-    velocityX = 0;           
+    velocityY = -18;
+    velocityX = 0;
     jumping = true;
     setButtonsEnabled(false);
+    stopTimer();  // stop timer when jumping
     onLand = callback;
   }
 }
 
 function update() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
   if (jumping) {
     velocityY += gravity;
     playerY += velocityY;
 
     if (velocityY < 0) {
       for (let i = 0; i < platforms.length; i++) {
-        platforms[i].y -= 3;  
+        platforms[i].y -= 3;
       }
     }
 
-    // land detection
+    // landing detection
     if (velocityY > 0 && playerY >= platforms[platforms.length - 1].y - 40) {
       playerY = platforms[platforms.length - 1].y - 40;
       velocityY = 0;
       jumping = false;
       playerX = 180;
       setButtonsEnabled(true);
+      resetTimer();  // restart timer on landing
+
       if (onLand) {
         onLand();
         onLand = null;
@@ -115,17 +116,10 @@ function update() {
   requestAnimationFrame(update);
 }
 
-
 function addPlatform() {
   const last = platforms[platforms.length - 1];
   const newY = last.y - 40;
   platforms.push({ x: 100, y: newY, width: 200, height: 15 });
-}
-
-function removePlatform() {
-  if (platforms.length > 1) {
-    platforms.pop();
-  }
 }
 
 function animatePlatformBreak(platform) {
@@ -133,8 +127,29 @@ function animatePlatformBreak(platform) {
   breakingPlatforms.push({ ...platform, frames });
 }
 
+function resetTimer() {
+  clearInterval(timerInterval);
+  timeLeft = 15;
+  timerText.textContent = "Time left: " + timeLeft;
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    timerText.textContent = "Time left: " + timeLeft;
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      handleTimeout();
+    }
+  }, 1000);
+}
+
+function stopTimer() {
+  clearInterval(timerInterval);
+}
 
 function answer(choice) {
+  if (jumping) return; // Prevent answering while jumping
+
+  stopTimer();
+
   const correct = questions[currentQuestion].good === choice;
 
   if (correct) {
@@ -143,7 +158,7 @@ function answer(choice) {
       score++;
       scoreText.textContent = 'Score: ' + score;
       currentQuestion++;
-      
+
       if (currentQuestion >= questions.length) {
         setTimeout(() => {
           alert(`Congrats! You finished all questions with a score of ${score}!`);
@@ -170,6 +185,7 @@ function answer(choice) {
     } else {
       playerY = platforms[platforms.length - 1].y - 40;
       questionText.textContent = questions[currentQuestion].prompt;
+      resetTimer();  // restart timer if still playing
     }
   }
 }
@@ -182,12 +198,20 @@ function resetGame() {
   platforms = [{ x: 100, y: 280, width: 200, height: 15 }];
   playerY = platforms[0].y - 40;
   playerX = 180;
+  resetTimer();
+}
+
+function handleTimeout() {
+  alert("Time's up!");
+  answer(false);
+}
+
+// Start the game only after the player image loads
+if (playerImage.complete) {
+  playerImage.onload();
+} else {
+  playerImage.onload = playerImage.onload; // redundant but safe
 }
 
 btnGood.addEventListener('click', () => answer(true));
 btnBad.addEventListener('click', () => answer(false));
-
-questionText.textContent = questions[currentQuestion].prompt;
-scoreText.textContent = 'Score: 0';
-draw();
-update();
