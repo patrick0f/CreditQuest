@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Credit Quiz Onboarding</title>
+  <!-- UPDATE: move style stuff into css file. this is just for testing -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+    #result {
+      margin-top: 30px;
+      font-weight: bold;
+      font-size: 18px;
+      display: none;
+    }
+    #continue-button {
+      margin-top: 20px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Welcome! Take this quick credit quiz</h1>
+  <form id="quiz-form">
+
+    <div class="question">
+      <p>1. What’s considered a good credit score?</p>
+      <label><input type="radio" name="q1" value="a" required> 500</label><br>
+      <label><input type="radio" name="q1" value="b"> 750</label><br>
+      <label><input type="radio" name="q1" value="c"> 300</label>
+    </div>
+
+    <div class="question">
+      <p>2. What has the biggest impact on your credit score?</p>
+      <label><input type="radio" name="q2" value="a" required> Number of credit cards</label><br>
+      <label><input type="radio" name="q2" value="b"> Credit mix</label><br>
+      <label><input type="radio" name="q2" value="c"> Payment history</label>
+    </div>
+
+    <div class="question">
+      <p>3. How often should you check your credit report?</p>
+      <label><input type="radio" name="q3" value="a" required> At least once a year</label><br>
+      <label><input type="radio" name="q3" value="b"> Every 5 years</label><br>
+      <label><input type="radio" name="q3" value="c"> Only before applying for a loan</label>
+    </div>
+
+    <div class="question">
+      <p>4. What’s a good rule of thumb for credit utilization?</p>
+      <label><input type="radio" name="q4" value="a" required> Keep it under 30%</label><br>
+      <label><input type="radio" name="q4" value="b"> Use the full limit</label><br>
+      <label><input type="radio" name="q4" value="c"> Keep it over 70%</label>
+    </div>
+
+    <div class="question">
+      <p>5. Which of these won’t affect your credit score?</p>
+      <label><input type="radio" name="q5" value="a" required> Late payments</label><br>
+      <label><input type="radio" name="q5" value="b"> Maxed out cards</label><br>
+      <label><input type="radio" name="q5" value="c"> Soft credit inquiries</label>
+    </div>
+
+    <button type="submit">Submit Quiz</button>
+  </form>
+
+  <div id="result"></div>
+  <button id="continue-button">Continue to Game Selection</button>
+
+  <script src="onboardingQuiz.js"></script>
+</body>
+</html>
