@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Credit Score Climber</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+      background: #f0f0f0;
+    }
+    canvas {
+      background: #ddd;
+      border: 2px solid #333;
+      display: block;
+      margin: 20px auto;
+    }
+    button {
+      font-size: 16px;
+      padding: 10px 20px;
+      margin: 10px;
+      cursor: pointer;
+    }
+    #question {
+      font-size: 22px;
+      font-weight: bold;
+      margin-top: 20px;
+      min-height: 60px;
+    }
+    #score {
+      font-size: 18px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="creditClimberCanvas" width="400" height="300"></canvas>
+
+  <div>
+    <button id="btnGood">Good Move 👍</button>
+    <button id="btnBad">Bad Move 👎</button>
+  </div>
+
+  <div id="question"></div>
+  <div id="score"></div>
+  <img id="playerImage" src="player.png" style="display:none" alt="Player">
+
+
+  <script src="creditClimber.js"></script>
+</body>
+</html>
