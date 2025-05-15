@@ -13,7 +13,21 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: [true, 'please provide password'],
         minLength: 8
-    }
+    },
+    assessment_score: {
+        type: Number,
+        required: [false, ""]
+    },
+    levels: {
+        type: Array,
+        required: [false, ""]
+    },
+    achievements: [{
+        name: { type: String, required: true },
+        description: { type: String, required: true },
+        unlocked: { type: Boolean, default: false },
+        unlockedAt: { type: Date }
+      }]
 })
 
 // hashes password before user is created

@@ -15,7 +15,26 @@ async function registerUser() {
           },
           body: JSON.stringify({
             username: username.value,
-            password: password.value
+            password: password.value,
+            //assessment_score: 0,
+            levels: [0, 0, 0],
+            achievements: [
+              {
+                name: "Foot in the Door",
+                description: "Complete initial assessment!",
+                unlocked: false,
+              },
+              {
+                name: "Credit Noob",
+                description: "Beat level one of a game",
+                unlocked: false,
+              },
+              {
+                name: "Jack of All Trades",
+                description: "Get to the max level for all games",
+                unlocked: false,
+              }
+          ]
           })
         });
     
