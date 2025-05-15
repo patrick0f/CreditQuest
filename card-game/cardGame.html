@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Match & Learn</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>Match & Learn</h1>
+  <p id="level-display"></p>
+  <div class="button-container">
+    <button id="directions-button">How to Play</button>
+    <button id="start-game-button">Start Game</button>
+    <button id="next-level-button" style="display: none;">Next Level</button>
+  </div>
+
+  <!-- Directions section (initially hidden) -->
+  <div id="directions" style="display: none;">
+    <h2>How to Play</h2>
+    <p>
+      Flip two cards at a time to try to find matching pairs.
+      Matches could be between credit terms and their definitions or real-world scenarios.
+      The difficulty level (beginner, intermediate, or advanced) is based on your quiz results.
+    </p>
+  </div>
+
+  <!-- Game container (initially hidden) -->
+  <div id="game-container" style="display: none;">
+    <!-- Game content will be injected here -->
+  </div>
+
+  <!-- Final Level Modal -->
+  <div id="final-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <h2>🎓 You've completed all levels!</h2>
+      <p>You're officially a credit expert. Great job!</p>
+      <button id="close-modal">OK</button>
+      <button id="replay-all">Replay All</button>
+    </div>
+  </div>
+
+  <button id="return-button">Return to Game Selection</button>
+
+  <script src="cardGame.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</body>
+</html>
