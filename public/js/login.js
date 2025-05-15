@@ -1,10 +1,10 @@
 const API_BASE_URL = 'http://localhost:8080';
 
-let form = document.querySelector('#form');
-let username = document.querySelector('#name');
-let password = document.querySelector('#password');
-let submitBtn = document.querySelector('#submit-btn');
-let preloader = document.querySelector('#preloader');
+let form = document.querySelector('#login-form');
+let username = document.querySelector('#your_name');
+let password = document.querySelector('#your_pass');
+let submitBtn = document.querySelector('#signin');
+//let preloader = document.querySelector('#preloader');
 
 async function loginUser() {
     try {
