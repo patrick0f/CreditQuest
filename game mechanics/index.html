@@ -4,52 +4,91 @@
   <meta charset="UTF-8" />
   <title>Credit Score Climber</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin: 20px;
-      background: #f0f0f0;
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom, #e2f0cb, #ffffff);
+      color: #333;
     }
+
     canvas {
-      background: #ddd;
-      border: 2px solid #333;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
       display: block;
-      margin: 20px auto;
+      background: #b5d3c3;
     }
+
+    .ui-container {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      z-index: 10;
+      background-color: rgba(255, 255, 255, 0.85);
+      padding: 15px 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
     button {
       font-size: 16px;
       padding: 10px 20px;
-      margin: 10px;
+      margin: 10px 5px;
+      border: none;
+      border-radius: 5px;
+      background-color: #4caf50;
+      color: white;
       cursor: pointer;
+      transition: background 0.3s ease;
     }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
     #question {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: bold;
-      margin-top: 20px;
-      min-height: 60px;
+      margin-top: 15px;
+      min-height: 40px;
     }
-    #score {
+
+    #score, #timer {
       font-size: 18px;
-      margin-top: 10px;
+      margin-top: 5px;
+    }
+
+    #timer {
+      color: #d23;
+    }
+
+    #playerImage {
+      display: none;
     }
   </style>
 </head>
 <body>
 
-  <canvas id="creditClimberCanvas" width="400" height="300"></canvas>
+  <canvas id="creditClimberCanvas"></canvas>
 
-  <div>
-    <button id="btnGood">Good Move!</button>
-    <button id="btnBad">Bad Move</button>
+  <div class="ui-container">
+    <div>
+      <button id="btnGood">✅ Good Move!</button>
+      <button id="btnBad">❌ Bad Move</button>
+    </div>
+    <div id="question">Loading...</div>
+    <div id="score">Score: 0</div>
+    <div id="timer">Time left: 15</div>
   </div>
 
-  <div id="question"></div>
-  <div id="score"></div>
-  <img id="playerImage" src="player.png" style="display:none" alt="Player">
-  <div id="timer" style="font-size: 20px; margin-top: 10px; color: #d23;">Time left: 15</div>
-
-
-
+  <img id="playerImage" src="player.png" alt="Player">
   <script src="creditClimber.js"></script>
 </body>
 </html>
