@@ -38,21 +38,6 @@
 
     // Get the navbar
 
-
-    // for menu scroll 
-    var pageLink = document.querySelectorAll('.page-scroll');
-    
-    pageLink.forEach(elem => {
-        elem.addEventListener('click', e => {
-            e.preventDefault();
-            document.querySelector(elem.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth',
-                offsetTop: 1 - 60,
-            });
-        });
-    });
-
-
     //===== close navbar-collapse when a  clicked
     let navbarToggler = document.querySelector(".navbar-toggler");    
     var navbarCollapse = document.querySelector(".navbar-collapse");
@@ -70,16 +55,5 @@
 
 	// WOW active
     new WOW().init();
-
-    
-    //====== counter up 
-    var cu = new counterUp({
-        start: 0,
-        duration: 2000,
-        intvalues: true,
-        interval: 100,
-        append: " ",
-    });
-    cu.start();
 
 })();
