@@ -1,94 +1,49 @@
-<!DOCTYPE html>
+\<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <title>Credit Score Climber</title>
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      overflow: hidden;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to bottom, #e2f0cb, #ffffff);
-      color: #333;
-    }
-
-    canvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      display: block;
-      background: #b5d3c3;
-    }
-
-    .ui-container {
-      position: absolute;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      text-align: center;
-      z-index: 10;
-      background-color: rgba(255, 255, 255, 0.85);
-      padding: 15px 25px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-
-    button {
-      font-size: 16px;
-      padding: 10px 20px;
-      margin: 10px 5px;
-      border: none;
-      border-radius: 5px;
-      background-color: #4caf50;
-      color: white;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #45a049;
-    }
-
-    #question {
-      font-size: 20px;
-      font-weight: bold;
-      margin-top: 15px;
-      min-height: 40px;
-    }
-
-    #score, #timer {
-      font-size: 18px;
-      margin-top: 5px;
-    }
-
-    #timer {
-      color: #d23;
-    }
-
-    #playerImage {
-      display: none;
-    }
-  </style>
+  <link rel="stylesheet" href="css/creditClimber.css" />
 </head>
 <body>
 
+  <!-- Game canvas -->
   <canvas id="creditClimberCanvas"></canvas>
 
+  <!-- UI Container -->
   <div class="ui-container">
-    <div>
-      <button id="btnGood">✅ Good Move!</button>
-      <button id="btnBad">❌ Bad Move</button>
+    <h1>Credit Score Climber</h1>
+    <div class="question-box">
+      <div id="question">Loading...</div>
+      <div class="button-group">
+        <button id="btnGood">✅ Good Move!</button>
+        <button id="btnBad">❌ Bad Move</button>
+      </div>
     </div>
-    <div id="question">Loading...</div>
-    <div id="score">Score: 0</div>
-    <div id="timer">Time left: 15</div>
+    <div class="status-box">
+      <div id="score">Score: 0</div>
+      <div id="timer">Time left: 15</div>
+    </div>
   </div>
 
-  <img id="playerImage" src="img/player.png" alt="Player">
-  <script src="creditClimber.js"></script>
+  <!-- Player sprite image (hidden) -->
+  <img id="playerImage" src="img/player.png" alt="Player" style="display: none;" />
+
+  <!-- Game logic -->
+  <script src="js/creditClimber.js"></script>
+
+  		</footer>
+
+   <!-- Vertical Meter -->
+    <div class="vertical-meter">
+      <div class="meter-fill" id="meterFill"></div>
+    </div>
+
+  <!-- Streak Tracker -->
+    <div class="streak-box" id="streakBox">
+      🔥 Streak: <span id="streakCount">0</span>
+    </div>
+
+    <!-- ========================= footer end ========================= -->
 </body>
 </html>

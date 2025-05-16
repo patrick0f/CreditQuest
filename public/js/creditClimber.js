@@ -8,6 +8,10 @@ window.onload = function () {
   const scoreText = document.getElementById('score');
   const playerImage = document.getElementById('playerImage');
   const timerText = document.getElementById('timer');
+  let streak = 0;
+  const meterFill = document.getElementById('meterFill');
+  const streakCount = document.getElementById('streakCount');
+
 
   //canvas size to fit window
   function resizeCanvas() {
@@ -152,6 +156,9 @@ window.onload = function () {
     const correct = questions[currentQuestion].good === choice;
 
     if (correct) {
+      streak++;
+      updateMeter();
+      updateStreak();
       addPlatform();
       jump(() => {
         score++;
@@ -168,6 +175,9 @@ window.onload = function () {
         questionText.textContent = questions[currentQuestion].prompt;
       });
     } else {
+      streak = 0;
+      updateMeter();
+      updateStreak();
       const brokenPlatform = platforms.pop();
       if (brokenPlatform) animatePlatformBreak(brokenPlatform);
       currentQuestion++;
@@ -189,16 +199,33 @@ window.onload = function () {
     }
   }
 
-  function resetGame() {
-    currentQuestion = 0;
-    score = 0;
-    scoreText.textContent = 'Score: 0';
-    questionText.textContent = questions[currentQuestion].prompt;
-    platforms = [{ x: 100, y: canvas.height - 100, width: 200, height: 15 }];
-    playerY = platforms[0].y - 40;
-    playerX = 180;
-    resetTimer();
+    function updateMeter() {
+      const percent = Math.min((score / questions.length) * 100, 100);
+      meterFill.style.height = percent + "%";
   }
+
+  function updateStreak() {
+    streakCount.textContent = streak;
+  }
+
+
+function resetGame() {
+  currentQuestion = 0;
+  score = 0;
+  streak = 0;
+
+  scoreText.textContent = 'Score: 0';
+  questionText.textContent = questions[currentQuestion].prompt;
+
+  platforms = [{ x: 100, y: canvas.height - 100, width: 200, height: 15 }];
+  playerY = platforms[0].y - 40;
+  playerX = 180;
+
+  updateMeter();   
+  updateStreak();  
+  resetTimer();
+}
+
 
   function handleTimeout() {
     alert("Time's up!");
