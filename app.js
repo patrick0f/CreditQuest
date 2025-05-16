@@ -13,10 +13,10 @@ const connectDB = require("./db/connect")
 const authenticateUser = require("./middleware/authentication")
 const authRouter = require('./routes/auth')
 const scores = require("./routes/scores")
+const api = require("./routes/api")
 
 const notFound = require("./middleware/not-found");
 const errorHandlerMiddleware = require("./middleware/error-handler");
-const fetch = require("node-fetch");
 
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000,
@@ -24,7 +24,7 @@ const limiter = rateLimit({
     standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
 	legacyHeaders: false, 
 })
-// app.use(limiter)
+ app.use(limiter)
 app.use(
   helmet({
     contentSecurityPolicy: {
@@ -53,37 +53,7 @@ app.use(express.static("./public"))
 
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/scores', authenticateUser, scores)
-
-
-app.post("/api/chat", async (req, res) => {
-  const { prompt } = req.body;
-
-  try {
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`
-      },
-      body: JSON.stringify({
-        model: "gpt-3.5-turbo",
-        messages: [{ role: "user", content: prompt }],
-        max_tokens: 500
-      })
-    });
-
-    const data = await response.json();
-
-    if (!data.choices) {
-      console.error("❌ OpenAI error response:", data);
-    }
-
-    res.json(data);
-  } catch (error) {
-    console.error("OpenAI fetch error:", error);
-    res.status(500).json({ error: "OpenAI API failed" });
-  }
-});
+app.use('/api/v1/api', api)
 
 app.use(notFound);
 app.use(errorHandlerMiddleware);
