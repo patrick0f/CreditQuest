@@ -2,23 +2,43 @@
 // after HTML loads
 document.addEventListener('DOMContentLoaded', () => {
 
-    // change these names to match with HTML, if needed!
     const form = document.getElementById('quiz-form'); 
-    const result = document.getElementById('result'); // where result is displayed
-    const continueButton = document.getElementById('continue-button'); // button that goes to next page that shows diff games
 
-    // hide result + continue button until user submits quiz
-    result.style.display = 'none';
-    continueButton.style.display = 'none';
+    async function callChatGPT(prompt) {
+        try {
+           const res = await fetch("http://localhost:8080/api/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              model: "gpt-3.5-turbo",
+              messages: [{ role: "user", content: prompt }],
+              max_tokens: 500
+            })
+          });
+          const json = await res.json();
+          if (!json.choices || !json.choices[0]) {
+            console.error("❌ Invalid ChatGPT response:", JSON.stringify(json, null, 2));
+            alert("ChatGPT gave an unexpected response. Check your server logs.");
+            return;
+          }
 
+        const resp = json.choices[0].message.content;
+          console.log(resp);
+          localStorage.setItem("response", resp);
+          return resp;
+        } catch (err) {
+          console.error("ChatGPT fetch error:", err.message || err);
+          alert("Error: " + (err.message || err));
+        }
+      }      
+      
     // when form is submitted
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
         const answers = new FormData(form);
         let score = 0;
 
-        // UPDATEE!!!
         const correctAnswers = {
             q1: 'b', 
             q2: 'c', 
@@ -37,25 +57,21 @@ document.addEventListener('DOMContentLoaded', () => {
         let level = '';
         if (score >= 4) {
             level = 'advanced';
-            result.textContent = "You're a credit pro!";
         } else if (score >= 2) {
             level = 'intermediate';
-            result.textContent = "Nice! You'll start at an intermediate level for each game.";
         } else {
             level = 'beginner';
-            result.textContent = "You're just starting out — no worries!";
         }
 
         // stores starting diff. level
         localStorage.setItem('creditLevel', level);
 
-        // show result + continue button
-        result.style.display = 'block';
-        continueButton.style.display = 'inline-block';
+        const prompt = `A user took a credit knowledge quiz and scored ${score}/5. Give them a short, friendly 2-sentence summary with encouragement and one tip for improvement.`;
 
-    });
+    await callChatGPT(prompt);
 
-    continueButton.addEventListener('click', () => {
-        window.location.href = 'selectGame.html';
+    // go to results page
+    window.location.assign("results.html");
+
     });
 });

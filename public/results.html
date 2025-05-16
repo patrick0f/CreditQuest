@@ -1,0 +1,12 @@
+<h1>Your Quiz Summary</h1>
+<p id="chatgpt-summary">Loading your personalized feedback...</p>
+
+<button onclick="window.location.href='selectGame.html'">Go to Game Selection</button>
+
+<script>
+  // Load the ChatGPT response from localStorage
+  const summary = localStorage.getItem("response");
+
+  // Display it in the <p> tag
+  document.getElementById("chatgpt-summary").textContent = summary || "No summary available.";
+</script>
