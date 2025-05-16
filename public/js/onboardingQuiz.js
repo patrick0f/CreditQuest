@@ -23,6 +23,30 @@ async function callChatGPT(prompt) {
   }
 }
 
+async function unlockAchievement(username, achievementName) {
+  try {
+    const response = await fetch('/api/v1/auth/achievement', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify({ username, achievementName })
+    });
+    
+    const data = await response.json();
+    
+    if (!response.ok) {
+      throw new Error(data.msg || 'Failed to unlock achievement');
+    }
+    
+    return data;
+  } catch (error) {
+    console.error('Error unlocking achievement:', error);
+    throw error;
+  }
+}
+
 // after HTML loads
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -85,6 +109,8 @@ document.addEventListener('DOMContentLoaded', () => {
     Soft credit inquiries
     Here are their answers: ${answers.entries}
     Give them a short, friendly 2-sentence summary with encouragement and one tip for improvement.`;
+    
+    unlockAchievement(localStorage.getItem('user'), 'Foot in the Door');
 
     const summaryDiv = document.getElementById("summary");
 
@@ -101,6 +127,5 @@ document.addEventListener('DOMContentLoaded', () => {
   continueBtn.addEventListener("click", () => {
     window.location.href = "selectGame.html"; // Adjust path if needed
   });
-
     });
 });
