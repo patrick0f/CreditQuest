@@ -97,6 +97,7 @@ h1 {
   width: 70px;}
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 .nav-bar {
   display: flex;
   align-items: center;
@@ -125,6 +126,8 @@ h1 {
   text-align: center;
 }
 
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 .game-desc {
@@ -520,5 +523,8 @@ text-decoration: none;
   transform: rotate(-45deg);
   position: relative;
   top: -5px;
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 }
