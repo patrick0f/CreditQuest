@@ -8,7 +8,10 @@
 <body>
 
   <!-- Game canvas -->
-  <canvas id="creditClimberCanvas"></canvas>
+<canvas id="starCanvas" style="position: fixed; top: 0; left: 0; z-index: 0;"></canvas>
+<canvas id="creditClimberCanvas" style="position: fixed; top: 0; left: 0; z-index: 1;"></canvas>
+
+
 
   <!-- Overlay for "Time's Up" message -->
   <div id="overlay" style="
@@ -93,27 +96,25 @@
   <!-- Player sprite image (hidden) -->
   <img id="playerImage" src="img/player.png" alt="Player" style="display: none;" />
 
- <!
+  <!-- Container for meter + streak -->
   <div id="statusContainer">
-  <div class="vertical-meter">
-    <div class="meter-fill" id="meterFill"></div>
-  </div>
+    <div class="vertical-meter">
+      <div class="meter-fill" id="meterFill"></div>
+    </div>
 
-  <div class="streak-box" id="streakBox">
-    🔥 Streak: <span id="streakCount">0</span>
+    <div class="streak-box" id="streakBox">
+      🔥 Streak: <span id="streakCount">0</span>
+    </div>
   </div>
-</div>
 
 
   <!-- Game logic -->
   <script src="js/creditClimber.js"></script>
+  <script src="js/stars.js"></script>
+
 
   		</footer>
 
-   <!-- Vertical Meter -->
-    <div class="vertical-meter">
-      <div class="meter-fill" id="meterFill"></div>
-    </div>
    
   <!-- Level Selector -->
     <select id="levelSelect" style="margin: 10px; font-size: 16px;">

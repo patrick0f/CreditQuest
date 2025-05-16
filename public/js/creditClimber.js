@@ -11,6 +11,47 @@ window.onload = function () {
   let streak = 0;
   const meterFill = document.getElementById('meterFill');
   const streakCount = document.getElementById('streakCount');
+  const starCanvas = document.getElementById('starCanvas');
+  const starCtx = starCanvas.getContext('2d');
+
+  function resizeStarCanvas() {
+    starCanvas.width = window.innerWidth;
+    starCanvas.height = window.innerHeight;
+  }
+  resizeStarCanvas();
+  window.addEventListener('resize', () => {
+    resizeCanvas();
+    resizeStarCanvas();
+  });
+
+  // Create stars array
+  const stars = [];
+  const numStars = 100;
+  for (let i = 0; i < numStars; i++) {
+    stars.push({
+      x: Math.random() * starCanvas.width,
+      y: Math.random() * starCanvas.height,
+      radius: Math.random() * 1.5 + 0.5,
+      alpha: Math.random(),
+      delta: (Math.random() * 0.02) + 0.005
+    });
+  }
+
+  function animateStars() {
+    starCtx.clearRect(0, 0, starCanvas.width, starCanvas.height);
+    for (let star of stars) {
+      star.alpha += star.delta;
+      if (star.alpha <= 0 || star.alpha >= 1) {
+        star.delta = -star.delta;
+      }
+      starCtx.beginPath();
+      starCtx.arc(star.x, star.y, star.radius, 0, 2 * Math.PI);
+      starCtx.fillStyle = `rgba(255, 255, 255, ${star.alpha})`;
+      starCtx.fill();
+    }
+    requestAnimationFrame(animateStars);
+  }
+  animateStars();
 
 
 
@@ -60,14 +101,6 @@ window.onload = function () {
       prompt: "Is applying for a new credit card just to get a bonus offer considered risky behavior?",
       good: false
     },
-    {
-      prompt: "Can keeping a low credit utilization rate make your score more stable over time?",
-      good: true
-    },
-    {
-      prompt: "Does opening too many new credit accounts in a short time negatively affect your credit?",
-      good: false
-    }
   ];
 
 
@@ -93,26 +126,6 @@ window.onload = function () {
       prompt: "You are new to credit and open a secured credit card, using it carefully. Is this a smart way to build credit?",
       good: true
     },
-    {
-      prompt: "You cosign a loan for a friend with a shaky credit history, hoping it will help them. Is this a safe way to build your credit?",
-      good: false
-    },
-    {
-      prompt: "You use 45% of your credit limit on a single card but pay it off in full every month. Will this likely hurt your credit score?",
-      good: true
-    },
-    {
-      prompt: "You apply for a mortgage, auto loan, and a new credit card all within the same week. Will this benefit your score?",
-      good: false
-    },
-    {
-      prompt: "You open a new credit card to increase your available credit and keep all old accounts open. Is this strategy good for your utilization ratio?",
-      good: true
-    },
-    {
-      prompt: "You intentionally carry a balance month-to-month to show lenders you’re using your credit. Is this the right approach?",
-      good: false
-    }
   ];
 
   const questionBanks = {
@@ -133,8 +146,15 @@ window.onload = function () {
   let currentQuestion = 0;
   let score = 0;
 
-  let platforms = [{ x: 100, y: canvas.height - 100, width: 200, height: 15 }];
-  let playerX = 180;
+  const platformWidth = 500;
+  platforms = [{
+    x: (canvas.width - platformWidth) / 2,
+    y: canvas.height - 100,
+    width: platformWidth,
+    height: 15
+  }];
+
+  let playerX = platforms[0].x + (platforms[0].width - 40) / 2;
   let playerY = platforms[0].y - 40;
   let velocityX = 0;
   let velocityY = 0;
@@ -206,7 +226,7 @@ window.onload = function () {
       playerY = platforms[platforms.length - 1].y - 40;
       velocityY = 0;
       jumping = false;
-      playerX = 180;
+      playerX = platforms[0].x + (platforms[0].width - 40) / 2;
       setButtonsEnabled(true);
       resetTimer();
 
@@ -225,7 +245,8 @@ window.onload = function () {
   function addPlatform() {
     const last = platforms[platforms.length - 1];
     const newY = last.y - 40;
-    platforms.push({ x: 100, y: newY, width: 200, height: 15 });
+    platforms.push({ x: last.x, y: newY, width: platformWidth, height: 15 });
+
   }
 
   function animatePlatformBreak(platform) {
@@ -285,7 +306,12 @@ window.onload = function () {
           scoreText.textContent = 'Score: 0';
           
           // Reset platforms and player position too
-          platforms = [{ x: 100, y: canvas.height - 100, width: 200, height: 15 }];
+          platforms = [{
+            x: (canvas.width - 200) / 2,
+            y: canvas.height - 100,
+            width: 200,
+            height: 15
+          }];
           playerY = platforms[0].y - 40;
           playerX = 180;
           setTimeout(() => {
@@ -374,9 +400,16 @@ function resetGame() {
   scoreText.textContent = 'Score: 0';
   questionText.textContent = questions[currentQuestion].prompt;
 
-  platforms = [{ x: 100, y: canvas.height - 100, width: 200, height: 15 }];
+  platforms = [{
+    x: (canvas.width - 200) / 2,
+    y: canvas.height - 100,
+    width: 200,
+    height: 15
+  }];
+
+
   playerY = platforms[0].y - 40;
-  playerX = 180;
+  playerX = platforms[0].x + (platforms[0].width - 40) / 2;
 
   meterFill.style.height = '0%';
   updateMeter();
