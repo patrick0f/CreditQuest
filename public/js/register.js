@@ -1,10 +1,10 @@
 const API_BASE_URL = 'http://localhost:8080';
 
-let form = document.querySelector('#form');
+let form = document.querySelector('#register-form');
 let username = document.querySelector('#name');
-let password = document.querySelector('#password');
-let submitBtn = document.querySelector('#submit-btn');
-let preloader = document.querySelector('#preloader');
+let password = document.querySelector('#pass');
+let submitBtn = document.querySelector('#signup');
+//let preloader = document.querySelector('#preloader');
 
 async function registerUser() {
     try {
@@ -16,7 +16,7 @@ async function registerUser() {
           body: JSON.stringify({
             username: username.value,
             password: password.value,
-            //assessment_score: 0,
+            assessment_score: 0,
             levels: [0, 0, 0],
             achievements: [
               {
@@ -60,7 +60,7 @@ form.addEventListener("submit", async (e) => {
     submitBtn.disabled = true;
     try {
         let user = await registerUser();
-        if (user && user.token) window.location.href = "index.html";
+        if (user && user.token) window.location.href = "selectGame.html";
     }
     catch (error) {
         console.log(error);

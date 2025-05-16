@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:8080';
+const API_BASE_URL = 'https://localhost:8080';
 
 let form = document.querySelector('#login-form');
 let username = document.querySelector('#your_name');
@@ -42,7 +42,7 @@ form.addEventListener("submit", async (e) => {
     try {
         let user = await loginUser();
         
-        if (user && user.token) window.location.href = "index.html";
+        if (user && user.token) window.location.href = "selectGame.html";
     }
     catch (error) {
         console.log(error);
