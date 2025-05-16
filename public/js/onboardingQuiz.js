@@ -74,6 +74,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // when form is submitted
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
+        form.querySelector('button[type="submit"]').style.display = "none";
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {
+          radio.disabled = true;
+        });
 
         const answers = new FormData(form);
         let score = 0;
