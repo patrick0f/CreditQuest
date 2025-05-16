@@ -294,16 +294,12 @@ window.onload = function () {
           playerY = platforms[0].y - 40;
           const playerWidth = 40; // or whatever your player width is
           playerX = platforms[0].x + (platforms[0].width / 2) - (playerWidth / 2);
-          setTimeout(() => {
-            alert(`Level up! Welcome to Level ${currentLevelIndex + 1}`);
+          showPopup(`🎉 Level up! Welcome to Level ${currentLevelIndex + 1}`, () => {
             questionText.textContent = questions[currentQuestion].prompt;
             resetTimer();
-          }, 300);
+          });
         } else {
-          setTimeout(() => {
-            alert(`Game complete! Final score: ${score}`);
-            showGameOver();
-          }, 300);
+          showPopup(`🏁 Game complete! Final score: ${score}`, showGameOver);
         }
         return;
       }
@@ -507,4 +503,16 @@ function startTimer() {
   btnBad.addEventListener('click', () => answer(false));
 };
 
+function showPopup(message, callback) {
+  const popup = document.getElementById('customPopup');
+  const messageEl = document.getElementById('popupMessage');
+  const closeBtn = document.getElementById('popupCloseBtn');
 
+  messageEl.textContent = message;
+  popup.style.display = 'flex';
+
+  closeBtn.onclick = () => {
+    popup.style.display = 'none';
+    if (callback) callback();
+  };
+}
