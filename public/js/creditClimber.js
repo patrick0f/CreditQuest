@@ -11,6 +11,51 @@ window.onload = function () {
   let streak = 0;
   const meterFill = document.getElementById('meterFill');
   const streakCount = document.getElementById('streakCount');
+  const starCanvas = document.getElementById('starCanvas');
+  const starCtx = starCanvas.getContext('2d');
+
+  function resizeStarCanvas() {
+    starCanvas.width = window.innerWidth;
+    starCanvas.height = window.innerHeight;
+  }
+  resizeStarCanvas();
+  window.addEventListener('resize', () => {
+    resizeCanvas();
+    resizeStarCanvas();
+  });
+
+  // Create stars array
+  const stars = [];
+  const numStars = 100;
+  for (let i = 0; i < numStars; i++) {
+    stars.push({
+      x: Math.random() * starCanvas.width,
+      y: Math.random() * starCanvas.height,
+      radius: Math.random() * 1.5 + 0.5,
+      alpha: Math.random(),
+      delta: (Math.random() * 0.02) + 0.005
+    });
+  }
+
+  function animateStars() {
+    starCtx.clearRect(0, 0, starCanvas.width, starCanvas.height);
+    for (let star of stars) {
+      star.alpha += star.delta;
+      if (star.alpha <= 0 || star.alpha >= 1) {
+        star.delta = -star.delta;
+      }
+      starCtx.beginPath();
+      starCtx.arc(star.x, star.y, star.radius, 0, 2 * Math.PI);
+      starCtx.fillStyle = `rgba(255, 255, 255, ${star.alpha})`;
+      starCtx.fill();
+    }
+    requestAnimationFrame(animateStars);
+  }
+  animateStars();
+
+
+
+
 
 
   //canvas size to fit window
@@ -21,8 +66,12 @@ window.onload = function () {
   resizeCanvas();
   window.addEventListener('resize', resizeCanvas);
 
-  // Questions- NEED TO UPDATE!!!
-  const questions = [
+  function shuffleArray(arr) {
+    return arr.sort(() => Math.random() - 0.5);
+  }
+
+  // Level 0: Beginner
+  const level0 = [
     { prompt: "Pay your bill on time?", good: true },
     { prompt: "Max out your credit card?", good: false },
     { prompt: "Check your credit report regularly?", good: true },
@@ -30,11 +79,82 @@ window.onload = function () {
     { prompt: "Keep old accounts open?", good: true }
   ];
 
+  // Level 1: Intermediate
+  const level1 = [
+    {
+      prompt: "Is it harmful to only pay the minimum balance on your credit card every month?",
+      good: false
+    },
+    {
+      prompt: "Can using under 30% of your total credit limit help boost your credit score?",
+      good: true
+    },
+    {
+      prompt: "Is it okay to ignore your credit card statements if you’ve set up autopay?",
+      good: false
+    },
+    {
+      prompt: "Does setting up automatic payments help avoid late fees and improve credit?",
+      good: true
+    },
+    {
+      prompt: "Is applying for a new credit card just to get a bonus offer considered risky behavior?",
+      good: false
+    },
+  ];
+
+
+  // Level 2: Advanced
+  const level2 = [
+    {
+      prompt: "You notice a late payment on your credit report that you’re sure you paid on time. Do you dispute the error?",
+      good: true
+    },
+    {
+      prompt: "To simplify your finances, you decide to close your oldest credit card with a long history. Is this a good idea?",
+      good: false
+    },
+    {
+      prompt: "You have a mix of installment loans and credit cards that you manage responsibly. Is this beneficial for your credit score?",
+      good: true
+    },
+    {
+      prompt: "You forget to pay your credit card bill and it’s now over 30 days late. Is this a minor issue?",
+      good: false
+    },
+    {
+      prompt: "You are new to credit and open a secured credit card, using it carefully. Is this a smart way to build credit?",
+      good: true
+    },
+  ];
+
+  const questionBanks = {
+    beginner: level0,
+    intermediate: level1,
+    pro: level2
+  };
+
+  const levels = ['beginner', 'intermediate', 'pro'];
+  let currentLevelIndex = 0;
+  let currentLevel = levels[currentLevelIndex];
+  let questions = questionBanks[currentLevel];
+
+
+
+
+
   let currentQuestion = 0;
   let score = 0;
 
-  let platforms = [{ x: 100, y: canvas.height - 100, width: 200, height: 15 }];
-  let playerX = 180;
+  const platformWidth = 500;
+  platforms = [{
+    x: (canvas.width - platformWidth) / 2,
+    y: canvas.height - 100,
+    width: platformWidth,
+    height: 15
+  }];
+
+  let playerX = platforms[0].x + (platforms[0].width - 40) / 2;
   let playerY = platforms[0].y - 40;
   let velocityX = 0;
   let velocityY = 0;
@@ -44,6 +164,8 @@ window.onload = function () {
   let breakingPlatforms = [];
   let timeLeft = 15;
   let timerInterval = null;
+  let falling = false;
+
 
   function setButtonsEnabled(enabled) {
     btnGood.disabled = !enabled;
@@ -93,42 +215,45 @@ window.onload = function () {
       velocityY += gravity;
       playerY += velocityY;
 
-      if (velocityY < 0) {
+      if (jumping && !falling && velocityY < 0) {
         for (let i = 0; i < platforms.length; i++) {
           platforms[i].y -= 3;
         }
-      }
-
-      // landing detection
-      if (velocityY > 0 && playerY >= platforms[platforms.length - 1].y - 40) {
-        playerY = platforms[platforms.length - 1].y - 40;
-        velocityY = 0;
-        jumping = false;
-        playerX = 180;
-        setButtonsEnabled(true);
-        resetTimer();
-
-        if (onLand) {
-          onLand();
-          onLand = null;
-        }
-      }
     }
 
-    draw();
-    requestAnimationFrame(update);
+    // landing detection
+    if (velocityY > 0 && playerY >= platforms[platforms.length - 1].y - 40) {
+      playerY = platforms[platforms.length - 1].y - 40;
+      velocityY = 0;
+      jumping = false;
+      playerX = platforms[0].x + (platforms[0].width - 40) / 2;
+      setButtonsEnabled(true);
+      resetTimer();
+
+      if (onLand) {
+        onLand();
+        onLand = null;
+      }
+    }
   }
+
+  draw();
+  requestAnimationFrame(update);
+}
+
 
   function addPlatform() {
     const last = platforms[platforms.length - 1];
     const newY = last.y - 40;
-    platforms.push({ x: 100, y: newY, width: 200, height: 15 });
+    platforms.push({ x: last.x, y: newY, width: platformWidth, height: 15 });
+
   }
 
   function animatePlatformBreak(platform) {
     let frames = 10;
     breakingPlatforms.push({ ...platform, frames });
-  }
+    velocityY = 0;
+   }
 
   function resetTimer() {
     clearInterval(timerInterval);
@@ -160,18 +285,49 @@ window.onload = function () {
       updateMeter();
       updateStreak();
       addPlatform();
+      const levels = ['beginner', 'intermediate', 'pro'];
       jump(() => {
         score++;
         scoreText.textContent = 'Score: ' + score;
         currentQuestion++;
 
-        if (currentQuestion >= questions.length) {
+      if (currentQuestion >= questions.length) {
+        currentLevelIndex++;
+
+        if (currentLevelIndex < levels.length) {
+          currentLevel = levels[currentLevelIndex];
+          questions = questionBanks[currentLevel];
+          currentQuestion = 0;
+
+          score = 0;
+          streak = 0;
+          meterFill.style.height = '0%';
+          streakCount.textContent = '0';
+          scoreText.textContent = 'Score: 0';
+          
+          // Reset platforms and player position too
+          platforms = [{
+            x: (canvas.width - 200) / 2,
+            y: canvas.height - 100,
+            width: 200,
+            height: 15
+          }];
+          playerY = platforms[0].y - 40;
+          playerX = 180;
           setTimeout(() => {
-            alert(`Congrats! You finished all questions with a score of ${score}!`);
-            resetGame();
-          }, 100);
-          return;
+            alert(`Level up! Welcome to Level ${currentLevelIndex + 1}`);
+            questionText.textContent = questions[currentQuestion].prompt;
+            resetTimer();
+          }, 300);
+        } else {
+          setTimeout(() => {
+            alert(`Game complete! Final score: ${score}`);
+            showGameOver();
+          }, 300);
         }
+        return;
+      }
+
         questionText.textContent = questions[currentQuestion].prompt;
       });
     } else {
@@ -201,27 +357,63 @@ window.onload = function () {
     function updateMeter() {
       const percent = Math.min((score / questions.length) * 100, 100);
       meterFill.style.height = percent + "%";
-  }
+    }
 
   function updateStreak() {
     streakCount.textContent = streak;
   }
+
+  function startLevel(levelName) {
+    currentLevelIndex = levels.indexOf(levelName);
+    currentLevel = levels[currentLevelIndex];
+    questions = questionBanks[currentLevel];
+    score = 0;
+    streak = 0;
+    currentQuestion = 0;
+    meterFill.style.height = '0%';
+    streakCount.textContent = '0';
+    scoreText.textContent = 'Score: 0';
+    timerText.textContent = 'Time left: 15';
+    document.getElementById('overlay').style.display = 'none';
+    gameOverOverlay.style.display = 'none';
+
+    currentLevel = levelName;
+    questions = questionBanks[levelName];
+    questions = shuffleArray(questions);
+
+    document.querySelector('.ui-container').style.display = 'block';
+
+    questionText.textContent = questions[currentQuestion].prompt;
+    resetTimer();
+  }
+
 
 
 function resetGame() {
   currentQuestion = 0;
   score = 0;
   streak = 0;
+  falling = false;
+  jumping = false;
+  velocityY = 0;
 
   scoreText.textContent = 'Score: 0';
   questionText.textContent = questions[currentQuestion].prompt;
 
-  platforms = [{ x: 100, y: canvas.height - 100, width: 200, height: 15 }];
-  playerY = platforms[0].y - 40;
-  playerX = 180;
+  platforms = [{
+    x: (canvas.width - 200) / 2,
+    y: canvas.height - 100,
+    width: 200,
+    height: 15
+  }];
 
-  updateMeter();   
-  updateStreak();  
+
+  playerY = platforms[0].y - 40;
+  playerX = platforms[0].x + (platforms[0].width - 40) / 2;
+
+  meterFill.style.height = '0%';
+  updateMeter();
+  updateStreak();
   resetTimer();
 }
 
@@ -243,11 +435,31 @@ function handleTimeout() {
   }, 2000);
 }
 
+  const goBackBtn = document.getElementById('goBackBtn');
   const gameOverOverlay = document.getElementById('gameOverOverlay');
+  const levelSelect = document.getElementById('levelSelect');
+  const startGameBtn = document.getElementById('startGameBtn');
+
+  startGameBtn.addEventListener('click', () => {
+  levelSelect.style.display = 'none';
+  startGameBtn.style.display = 'none';
+  });
+
+
+  goBackBtn.addEventListener('click', () => {
+    gameOverOverlay.style.display = 'none';
+
+    // Show the level selector and start button again
+    levelSelect.style.display = 'inline-block';
+    startGameBtn.style.display = 'inline-block';
+
+    // Optionally reset other UI elements if needed
+  });
   const restartBtn = document.getElementById('restartBtn');
   restartBtn.addEventListener('click', () => {
   hideGameOver();
   });
+
 
 
   function showGameOver() {
@@ -268,6 +480,7 @@ function handleTimeout() {
 
   // initialize game after image loads
   if (playerImage.complete) {
+    console.log("Player image already loaded");
     questionText.textContent = questions[currentQuestion].prompt;
     scoreText.textContent = 'Score: 0';
     resetTimer();
@@ -275,6 +488,7 @@ function handleTimeout() {
     update();
   } else {
     playerImage.onload = function () {
+      console.log("Player image loaded just now");
       questionText.textContent = questions[currentQuestion].prompt;
       scoreText.textContent = 'Score: 0';
       resetTimer();

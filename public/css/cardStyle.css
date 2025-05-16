@@ -3,16 +3,20 @@ body {
     padding: 40px;
     background-color: #f9f9f9;
     text-align: center;
+    background: url('../img/table.jpg');
   }
   
   h1 {
     margin-bottom: 10px;
+    color: white;
+    font-size: 50px;
   }
   
   #level-display {
-    font-size: 18px;
+    font-size: 25px;
     margin-bottom: 20px;
     font-weight: bold;
+    color: white;
   }
   
   .button-container {
@@ -136,31 +140,73 @@ body {
 }
 
 .card-front.beginner {
-  background: linear-gradient(135deg, #2196f3, #64b5f6);
+  background: linear-gradient(135deg, #0d47a1, #1976d2);
+  color: white;
 }
 
 .card-front.intermediate {
-  background: linear-gradient(135deg, #c0c0c0, #e0e0e0);
-  color: #222;
+  background: linear-gradient(135deg, #aeb0b2, #dfe0e2);
+  color: white;
 }
 
 .card-front.advanced {
-  background: linear-gradient(135deg, #b8860b, #daa520); /* darker gold gradient */
-  color: #fff; /* white text for better contrast */
+   background: linear-gradient(135deg, #b8860b, #ffd700);
+  color: white;
 }
 
 .card-back.beginner {
-  background: linear-gradient(135deg, #2196f3, #64b5f6); /* blue */
+ background: linear-gradient(135deg, #0d47a1, #1976d2);
+  color: white;
 }
 
 .card-back.intermediate {
-  background: linear-gradient(135deg, #c0c0c0, #e0e0e0); /* silver */
-  color: #222; /* darker text for readability */
+  background: linear-gradient(135deg, #aeb0b2, #dfe0e2);
+  color: white;
 }
 
 .card-back.advanced {
-  background: linear-gradient(135deg, #b8860b, #daa520); /* darker gold gradient */
-  color: #fff; /* white text for better contrast */
+   background: linear-gradient(135deg, #b8860b, #ffd700);
+  color: white;
+}
+
+.card-brand {
+  font-family: 'Arial Black', sans-serif;
+  font-size: 18px;
+  color: white;
+  opacity: 0.8;
+  margin-bottom: 10px;
+  position: absolute;
+  top: 12px;
+  right: 20px;
+}
+
+.exp-date {
+  font-family: 'Arial Black', sans-serif;
+  font-size: 18px;
+  color: white;
+  opacity: 0.8;
+  margin-bottom: 10px;
+  position: absolute;
+  bottom: 12px;
+  right: 20px;
+}
+
+.name {
+  font-family: 'Arial Black', sans-serif;
+  font-size: 16px;
+  color: white;
+  opacity: 0.8;
+  margin-bottom: 10px;
+  position: absolute;
+  bottom: 12px;
+  left: 20px;
+}
+
+.card-icon {
+  margin: auto;
+  font-size: 20px;
+  align-self: center;
+  color: white;
 }
   
   /* Modal Styles */
@@ -209,4 +255,17 @@ body {
     background-color: #254b9c;
   }
   
-
+  #directions {
+  background-color: #ffffff;
+  padding: 20px 30px;
+  margin: 40px auto;
+  max-width: 600px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  text-align: center; /* center text */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* center content horizontally */
+  justify-content: center; /* center content vertically (if you want fixed height) */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}

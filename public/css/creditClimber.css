@@ -48,16 +48,40 @@ button:hover {
   background-color: #45a049;
 }
 
-.vertical-meter {
-  position: absolute;
-  right: 20px;
+#statusContainer {
+  position: fixed;
   top: 80px;
-  width: 20px;
-  height: 300px;
-  border: 2px solid #4caf50;
+  left: 20px;       /* Move container left */
+  right: 20px;      /* Also keep right so flex works */
+  display: flex;
+  justify-content: space-between;  /* Spread streak and meter apart */
+  align-items: center;
+  width: calc(100% - 40px);        /* Full width minus left+right padding */
+  z-index: 1000;
+  pointer-events: none; /* Optional: to avoid catching clicks */
+}
+
+.streak-box {
+  background-color: #fff9e6;
+  border-left: 5px solid orange;
+  padding: 15px 25px;    /* bigger padding */
+  font-weight: bold;
+  font-size: 20px;       /* bigger font */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  border-radius: 5px;
+  pointer-events: auto;
+  min-width: 140px;      /* ensure some minimum width */
+}
+
+.vertical-meter {
+  position: relative;
+  width: 100px;           /* wider meter */
+  height: 350px;         /* taller meter */
+  border: 3px solid #4caf50;  /* thicker border */
   background-color: #f0f0f0;
   border-radius: 10px;
   overflow: hidden;
+  pointer-events: auto;
 }
 
 .meter-fill {
@@ -65,19 +89,6 @@ button:hover {
   width: 100%;
   height: 0%;
   transition: height 0.3s ease;
-}
-
-.streak-box {
-  position: absolute;
-  top: 400px;
-  right: 20px;
-  background-color: #fff9e6;
-  border-left: 5px solid orange;
-  padding: 10px 15px;
-  font-weight: bold;
-  font-size: 16px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  border-radius: 5px;
 }
 
 #overlay {
@@ -130,4 +141,41 @@ button:hover {
 #playerImage {
   display: none;
 }
+
+#starCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none; /* lets clicks pass through */
+  z-index: 0; /* behind game */
+  background: transparent;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* prevent scrollbars */
+  height: 100%;
+  width: 100%;
+}
+
+canvas {
+  display: block;
+}
+
+#creditClimberCanvas {
+  background: transparent !important;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+}
+
+
+
+
 

@@ -72,7 +72,12 @@ function getCardPairs(level) {
       cardEl.dataset.pairId = card.pairId;
       cardEl.innerHTML = `
       <div class="card-inner">
-      <div class="card-front">❓</div>
+      <div class="card-front">
+        <div class="card-brand">Capital One</div>
+        <div class="card-icon">1234 5678 1234 5678</div>
+        <div class="exp-date">00/00</div>
+        <div class="name">Richard F.</div>
+      </div>
       <div class="card-back">${card.value}</div>
       </div>`;
       const frontEl = cardEl.querySelector('.card-front');
@@ -137,6 +142,9 @@ function checkWin() {
       } else {
         const winMessage = document.getElementById('win-message');
         winMessage.innerText = "🎉 Great job! You matched all the cards.";
+        winMessage.style.fontSize = "28px";     // make it bigger
+winMessage.style.color = "white";       // make it white
+winMessage.style.fontWeight = "bold";   // optional: make it bold
         document.getElementById('win-container').style.display = 'block';
         nextLevelButton.style.display = 'inline-block';
       }
@@ -144,7 +152,6 @@ function checkWin() {
   }
 }
 
-  
   
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -185,5 +192,3 @@ document.getElementById('return-button').addEventListener('click', () => {
     window.location.href = 'selectGame.html';
 });
   
-
-

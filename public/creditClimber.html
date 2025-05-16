@@ -8,7 +8,10 @@
 <body>
 
   <!-- Game canvas -->
-  <canvas id="creditClimberCanvas"></canvas>
+<canvas id="starCanvas" style="position: fixed; top: 0; left: 0; z-index: 0;"></canvas>
+<canvas id="creditClimberCanvas" style="position: fixed; top: 0; left: 0; z-index: 1;"></canvas>
+
+
 
   <!-- Overlay for "Time's Up" message -->
   <div id="overlay" style="
@@ -61,6 +64,17 @@
       background: #4caf50;
       color: white;
     ">Restart</button>
+
+     <button id="goBackBtn" style="
+      margin-top: 15px;
+      padding: 10px 25px;
+      font-size: 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #2196F3;
+      color: white;
+    ">Go Back to Selection</button>
   </div>
 
   <!-- UI Container -->
@@ -82,20 +96,35 @@
   <!-- Player sprite image (hidden) -->
   <img id="playerImage" src="img/player.png" alt="Player" style="display: none;" />
 
-  <!-- Game logic -->
-  <script src="js/creditClimber.js"></script>
-
-  		</footer>
-
-   <!-- Vertical Meter -->
+  <!-- Container for meter + streak -->
+  <div id="statusContainer">
     <div class="vertical-meter">
       <div class="meter-fill" id="meterFill"></div>
     </div>
 
-  <!-- Streak Tracker -->
     <div class="streak-box" id="streakBox">
       🔥 Streak: <span id="streakCount">0</span>
     </div>
+  </div>
+
+
+  <!-- Game logic -->
+  <script src="js/creditClimber.js"></script>
+  <script src="js/stars.js"></script>
+
+
+  		</footer>
+
+   
+  <!-- Level Selector -->
+    <select id="levelSelect" style="margin: 10px; font-size: 16px;">
+    <option value="beginner">Beginner</option>
+    <option value="intermediate">Intermediate</option>
+    <option value="pro">Pro</option>
+  </select>
+  <!-- Start Game Button -->  
+  <button id="startGameBtn" style="font-size: 16px; padding: 5px 15px;">Start Game</button>
+
 
     <!-- ========================= footer end ========================= -->
 </body>

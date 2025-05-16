@@ -6,27 +6,36 @@
   <!-- UPDATE: move style stuff into css file. this is just for testing -->
   <link rel="stylesheet" href="css/selectGame.css">
 </head>
-<body>
 
+<header class="nav-bar">
+  <img src="img/favicon.png" alt="Credit Quest Logo" id="site-logo" />
+  <span class="site-title">Credit Quest</span>
+</header>
+
+<body>
+<div class="page-wrapper">
   <h1>Select a Game</h1>
   <div id="achievements"></div>
   <div id="level-display">Loading your level...</div>
 
   <div class="game-container">
     <div class="game-card">
-      <h3>Credit Climber</h3>
+      <h3>📈 Credit Climber</h3>
+      <p class="game-desc">Test your credit knowledge and jump to the top!</p>
       <button class="game-button" data-game="creditClimber.html">Play</button>
     </div>
     <div class="game-card">
-      <h3>Credit Cards</h3>
+      <h3>💳 Credit Cards</h3>
+      <p class="game-desc">Match terms and definitions to become a credit pro.</p>
       <button class="game-button" data-game="cardGame.html">Play</button>
     </div>
     <div class="game-card">
-      <h3>Credit Life</h3>
-      <button class="game-button" data-game="creditLife.html">Play</button>
+      <h3>Game 3</h3>
+      <button class="game-button" data-game="game3.html">Play</button>
     </div>
   </div>
-
+  </div>
+  <img src="img/loginlogo.png" alt="Mascot" class="site-corner-image">
   <script src="js/selectGame.js"></script>
 </body>
 </html>
