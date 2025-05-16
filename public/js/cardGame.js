@@ -142,6 +142,9 @@ function checkWin() {
       } else {
         const winMessage = document.getElementById('win-message');
         winMessage.innerText = "🎉 Great job! You matched all the cards.";
+        winMessage.style.fontSize = "28px";     // make it bigger
+winMessage.style.color = "white";       // make it white
+winMessage.style.fontWeight = "bold";   // optional: make it bold
         document.getElementById('win-container').style.display = 'block';
         nextLevelButton.style.display = 'inline-block';
       }
