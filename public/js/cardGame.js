@@ -67,13 +67,21 @@ function getCardPairs(level) {
     gameContainer.innerHTML = "";
     cards.forEach(card => {
       const cardEl = document.createElement("div");
-      cardEl.className = "card";
+      cardEl.className = `card ${currentLevel}`;
       cardEl.dataset.id = card.id;
       cardEl.dataset.pairId = card.pairId;
-      cardEl.innerText = "❓";
+      cardEl.innerHTML = `
+      <div class="card-inner">
+      <div class="card-front">❓</div>
+      <div class="card-back">${card.value}</div>
+      </div>`;
+      const frontEl = cardEl.querySelector('.card-front');
+      const backEl = cardEl.querySelector('.card-back');
+      frontEl.classList.add(currentLevel);
+      backEl.classList.add(currentLevel);
+      cardEl.dataset.content = card.value;
       cardEl.addEventListener("click", handleCardClick);
       gameContainer.appendChild(cardEl);
-      cardEl.dataset.content = card.value;
     });
   }
 
@@ -81,10 +89,10 @@ let flipped = [];
 let lockBoard = false;
 
 function handleCardClick(e) {
-  const card = e.target;
-  if (lockBoard || flipped.includes(card)) return;
+  const card = e.currentTarget; // use currentTarget to always get the full card div
+  if (card.classList.contains("matched") || card.classList.contains("flipped") || lockBoard) return;
 
-  card.innerText = card.dataset.content;
+  card.classList.add("flipped");
   flipped.push(card);
 
   if (flipped.length === 2) {
@@ -95,15 +103,15 @@ function handleCardClick(e) {
       card1.dataset.pairId === card2.dataset.pairId &&
       card1.dataset.id !== card2.dataset.id
     ) {
-      card1.style.backgroundColor = "#cfc";
-      card2.style.backgroundColor = "#cfc";
+      card1.classList.add("matched");
+      card2.classList.add("matched");
       flipped = [];
       lockBoard = false;
       checkWin();
     } else {
       setTimeout(() => {
-        card1.innerText = "❓";
-        card2.innerText = "❓";
+        card1.classList.remove("flipped");
+        card2.classList.remove("flipped");
         flipped = [];
         lockBoard = false;
       }, 1000);
@@ -112,29 +120,30 @@ function handleCardClick(e) {
 }
 
 function checkWin() {
-    const remaining = [...document.querySelectorAll('.card')].filter(c => c.innerText === "❓");
-    if (remaining.length === 0) {
-      setTimeout(() => {
-        const currentIndex = levels.indexOf(currentLevel);
-  
-        if (currentIndex === levels.length - 1) {
-            // Show confetti
-            confetti({
-              particleCount: 150,
-              spread: 70,
-              origin: { y: 0.6 }
-            });
-          
-            // Show custom modal
-            document.getElementById('final-modal').style.display = 'flex';
-          } else {
-          alert("🎉 Great job! You matched all the cards.");
-          nextLevelButton.style.display = 'inline-block';
-        }
-      }, 300);
-    }
+  const totalCards = document.querySelectorAll('.card').length;
+  const matchedCards = document.querySelectorAll('.card.matched').length;
+
+  if (matchedCards === totalCards) {
+    setTimeout(() => {
+      const currentIndex = levels.indexOf(currentLevel);
+
+      if (currentIndex === levels.length - 1) {
+        confetti({
+          particleCount: 150,
+          spread: 70,
+          origin: { y: 0.6 }
+        });
+        document.getElementById('final-modal').style.display = 'flex';
+      } else {
+        const winMessage = document.getElementById('win-message');
+        winMessage.innerText = "🎉 Great job! You matched all the cards.";
+        document.getElementById('win-container').style.display = 'block';
+        nextLevelButton.style.display = 'inline-block';
+      }
+    }, 300);
   }
-  
+}
+
   
   
 function shuffle(array) {
@@ -151,6 +160,8 @@ nextLevelButton.addEventListener('click', () => {
   const currentIndex = levels.indexOf(currentLevel);
   if (currentIndex < levels.length - 1) {
     currentLevel = levels[currentIndex + 1];
+
+    document.getElementById('win-container').style.display = 'none';
 
     levelDisplay.textContent = `You're playing on the ${currentLevel.toUpperCase()} level.`;
     nextLevelButton.style.display = 'none';
@@ -171,7 +182,7 @@ document.getElementById('replay-all').addEventListener('click', () => {
 });
 
 document.getElementById('return-button').addEventListener('click', () => {
-    window.location.href = '../public/selectGame.html';
+    window.location.href = 'selectGame.html';
 });
   
 
