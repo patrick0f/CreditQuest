@@ -320,7 +320,8 @@ window.onload = function () {
             height: 15
           }];
           playerY = platforms[0].y - 40;
-          playerX = 180;
+          const playerWidth = 40; // or whatever your player width is
+          playerX = platforms[0].x + (platforms[0].width / 2) - (playerWidth / 2);
           setTimeout(() => {
             alert(`Level up! Welcome to Level ${currentLevelIndex + 1}`);
             questionText.textContent = questions[currentQuestion].prompt;
