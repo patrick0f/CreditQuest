@@ -2,7 +2,7 @@
 
 // level of user
 const levels = ['beginner', 'intermediate', 'advanced'];
-let currentLevel = localStorage.getItem('creditLevel') || 'beginner';
+let currentLevel = 'beginner';
 
 // elements
 const startButton = document.getElementById('start-game-button');
