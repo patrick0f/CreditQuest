@@ -36,11 +36,12 @@ h1 {
 .game-card {
   background-color: white;
   border: 2px solid #e0e0e0;
-  padding: 30px 20px;
-  width: 240px;
+  padding: 40px 30px;          /* increased padding */
+  width: 320px;                /* wider card */
   border-radius: 16px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s, box-shadow 0.3s;
+  text-align: center;
 }
 
 .game-card:hover {
@@ -49,8 +50,7 @@ h1 {
 }
 
 .game-card h3 {
-  font-size: 20px;
-  color: #333;
+  font-size: 24px;
   margin-bottom: 16px;
 }
 
@@ -59,8 +59,8 @@ h1 {
   background-color: #3366cc;
   color: white;
   border: none;
-  padding: 12px 20px;
-  font-size: 16px;
+  font-size: 18px;
+  padding: 16px 28px;
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
@@ -78,3 +78,49 @@ h1 {
   color: #555;
 }
 
+.nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* ⬅ centers all content */
+  padding: 20px;
+  background: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  position: relative;
+}
+
+#site-logo {
+  height: 80px;
+  position: absolute;
+  left: 20px;
+}
+
+.site-title {
+    color: #254b9c;
+    font-size: 30px;
+    font-family: 'Segoe UI', sans-serif;
+    font-weight: bold;
+}
+
+.game-desc {
+  font-size: 16px;
+}
+
+.site-corner-image {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 150px;      /* adjust size */
+  height: auto;
+  opacity: 0.9;
+  z-index: 1000;     /* ensure it stays on top */
+  pointer-events: none; /* so it doesn't block clicks */
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.site-corner-image {
+  animation: float 3s ease-in-out infinite;
+}
