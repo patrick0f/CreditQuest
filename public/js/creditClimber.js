@@ -7,6 +7,19 @@ window.onload = function () {
   const scoreText = document.getElementById('score');
   const playerImage = document.getElementById('playerImage');
   const timerText = document.getElementById('timer');
+  document.getElementById('timer').textContent = 'Time left: 15';
+
+  document.addEventListener('DOMContentLoaded', () => {
+
+    const returnBtn = document.getElementById('returnButton');
+
+
+    returnBtn.addEventListener('click', () => {
+      window.location.href = 'selectGame.html';
+    });
+  });
+
+
   let streak = 0;
   const ctx = canvas.getContext("2d");
   // Make sure canvas is resized first
@@ -18,21 +31,14 @@ window.onload = function () {
   window.addEventListener('resize', resizeCanvas);
   const meterFill = document.getElementById('meterFill');
   const streakCount = document.getElementById('streakCount');
-  const startGameBtn = document.getElementById('startGameBtn');
-  startGameBtn.addEventListener('click', () => {
-  startGame(); // call the main function
-  levelSelect.style.display = 'none';
-  startGameBtn.style.display = 'none';
-});
+//   const startGameBtn = document.getElementById('startGameBtn');
+//   startGameBtn.addEventListener('click', () => {
+//   startGame(); // call the main function
+//   levelSelect.style.display = 'none';
+//   startGameBtn.style.display = 'none';
+// });
 
   window.addEventListener('DOMContentLoaded', () => {
-    const canvas = document.getElementById("starCanvas");
-
-    if (!canvas) {
-      console.error("Canvas with id 'starCanvas' not found.");
-      return;
-    }
-
     function resizeCanvas() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -416,27 +422,32 @@ function handleTimeout() {
   const levelSelect = document.getElementById('levelSelect');
 
 
-  function startGame() {
-  // 1. Hide the Start Game button
-  document.getElementById('startGameBtn').style.display = 'none';
+  goBackBtn.addEventListener('click', () => {
+  window.location.href = 'selectGame.html';
+});
 
-  // 2. Reset game state
-  score = 0;
-  streak = 0;
-  currentQuestionIndex = 0;
-  updateScoreDisplay();  // custom function you define
-  updateStreakDisplay(); // custom function
 
-  // 3. Start the timer
-  startTimer(); // assumes you have a timer function
+//   function startGame() {
+//   // 1. Hide the Start Game button
+//   document.getElementById('startGameBtn').style.display = 'none';
 
-  // 4. Load the first question
-  showNextQuestion(); // your question-handling function
+//   // 2. Reset game state
+//   score = 0;
+//   streak = 0;
+//   currentQuestionIndex = 0;
+//   updateScoreDisplay();  // custom function you define
+//   updateStreakDisplay(); // custom function
 
-  // 5. Reset or show any UI you need
-  document.getElementById('statusContainer').style.display = 'flex';
+//   // 3. Start the timer
+//   startTimer(); // assumes you have a timer function
 
-}
+//   // 4. Load the first question
+//   showNextQuestion(); // your question-handling function
+
+//   // 5. Reset or show any UI you need
+//   document.getElementById('statusContainer').style.display = 'flex';
+
+// }
 
 function startTimer() {
   timeLeft = 30;
@@ -452,9 +463,6 @@ function startTimer() {
 }
 
 
-  goBackBtn.addEventListener('click', () => {
-  window.location.href = 'selectGame.html';
-});
 
   const restartBtn = document.getElementById('restartBtn');
   restartBtn.addEventListener('click', () => {
