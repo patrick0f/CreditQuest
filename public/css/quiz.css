@@ -1,0 +1,135 @@
+/* General page styling */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+  margin: 0;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+/* Main header */
+h1 {
+  font-size: 28px;
+  margin-bottom: 30px;
+  color: #1a1a1a;
+}
+
+/* Form container */
+form {
+  background: #fff;
+  border-radius: 12px;
+  padding: 30px;
+  max-width: 600px;
+  margin: 0 auto;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* Each question block */
+.question {
+  text-align: left;
+  margin-bottom: 30px;
+}
+
+.question p {
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #3366cc; /* Capital One light blue */
+}
+
+/* Radio inputs and labels */
+.question label {
+  display: block;
+  margin: 8px 0;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.question input[type="radio"] {
+  margin-right: 8px;
+}
+
+.question label:hover {
+  background-color: #e3f0ff;
+}
+
+/* Buttons */
+button {
+  background-color: #3366cc;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #254b9c;
+}
+
+#continue-button {
+  display: none;
+  background-color: #3366cc; /* Capital One red */
+}
+
+#continue-button:hover {
+  background-color: #254b9c;
+}
+
+/* Result summary */
+#result,
+#summary {
+  margin-top: 30px;
+  font-weight: bold;
+  font-size: 20px;
+  display: none;
+  color: #1a1a1a;
+}
+
+#mascot-summary {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  margin-top: 40px;
+  gap: 20px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#mascot-image {
+  height: 180px;
+  width: auto;
+}
+
+#speech-bubble {
+  background-color: #fff;
+  border: 2px solid #3366cc;
+  border-radius: 20px;
+  padding: 20px;
+  max-width: 400px;
+  position: relative;
+  font-size: 18px;
+  font-weight: bold;
+  color: #1a1a1a;
+  box-shadow: 4px 6px 20px rgba(0,0,0,0.1);
+}
+
+/* Speech bubble triangle */
+#speech-bubble::before {
+  content: "";
+  position: absolute;
+  left: -20px;
+  top: 30px;
+  width: 0;
+  height: 0;
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+  border-right: 20px solid #3366cc;
+}

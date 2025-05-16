@@ -3,30 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Credit Quiz Onboarding</title>
-  <!-- UPDATE: move style stuff into css file. this is just for testing -->
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 40px;
-    }
-    .question {
-      margin-bottom: 20px;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-    }
-    #result {
-      margin-top: 30px;
-      font-weight: bold;
-      font-size: 18px;
-      display: none;
-    }
-    #continue-button {
-      margin-top: 20px;
-      display: none;
-    }
-  </style>
+  <link rel="stylesheet" href="css/quiz.css">
 </head>
 <body>
 
@@ -68,14 +45,18 @@
       <label><input type="radio" name="q5" value="c"> Soft credit inquiries</label>
     </div>
 
-    <div id="summary" style="margin-top: 20px; font-weight: bold; display: none;"></div>
-
     <button type="submit">Submit Quiz</button>
 
-    <button id="continue-button" style="display: none;">Continue to Game Selection</button>
-    <div id="summary" style="display: none; margin-top: 20px;"></div>
+    <button id="continue-button">Continue to Game Selection</button>
     
   </form>
+
+  <div id="mascot-summary" style="display: none;">
+  <img src="img/mascot.png" alt="Credit Card Mascot" id="mascot-image" />
+  <div id="speech-bubble">
+    <p id="summary-text"></p>
+  </div>
+</div>
 
   <script src="js/onboardingQuiz.js"></script>
 </body>

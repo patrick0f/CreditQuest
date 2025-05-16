@@ -86,7 +86,8 @@ document.addEventListener('DOMContentLoaded', () => {
     Here are their answers: ${answers.entries}
     Give them a short, friendly 2-sentence summary with encouragement and one tip for improvement.`;
 
-    const summaryDiv = document.getElementById("summary");
+    const summaryDiv = document.getElementById("summary-text");
+    document.getElementById("mascot-summary").style.display = "flex"; 
 
     const response = await callChatGPT(prompt);
 
