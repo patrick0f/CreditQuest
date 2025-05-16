@@ -148,5 +148,18 @@ document.addEventListener('DOMContentLoaded', () => {
     window.location.href = "selectGame.html"; // Adjust path if needed
   });
 
+<<<<<<< Updated upstream
+=======
+    await callChatGPT(prompt);
+    await User.findOneAndUpdate(
+      { username: localStorage.getItem('user'), "achievements.name": "Foot in the Door" },
+      { 
+        $set: { 
+          "achievements.$.unlocked": true,
+          "achievements.$.unlockedAt": new Date()
+        } 
+      }
+    );
+>>>>>>> Stashed changes
     });
 });
