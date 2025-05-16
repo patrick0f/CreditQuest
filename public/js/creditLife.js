@@ -111,12 +111,13 @@ let msgText = prompts[question];
 
 for (let i = 1; i <= 4; i++) {
     if (choices[`CHOICE${i}`]) {
-      msgText = msgText.replace(`[CHOICE${i}]`, choices[`CHOICE${i}`]);
+      const regex = new RegExp(`\\[CHOICE${i}\\]`, "g");
+      msgText = msgText.replace(regex, choices[`CHOICE${i}`]);
     }
   }
 
 choices[`prompt${question}`] = msgText;
-const response = await callChatGPT(choices);
+const response = await callChatGPT(msgText);
 
 await appendMessage(BOT_NAME, BOT_IMG, "left", response);
 if (question == 5) {
