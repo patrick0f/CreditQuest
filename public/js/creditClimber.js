@@ -14,6 +14,13 @@ window.onload = function () {
   const starCanvas = document.getElementById('starCanvas');
   const starCtx = starCanvas.getContext('2d');
 
+  startGameBtn.addEventListener('click', () => {
+  startGame(); // call the main function
+  levelSelect.style.display = 'none';
+  startGameBtn.style.display = 'none';
+});
+
+
   function resizeStarCanvas() {
     starCanvas.width = window.innerWidth;
     starCanvas.height = window.innerHeight;
@@ -438,23 +445,53 @@ function handleTimeout() {
   const goBackBtn = document.getElementById('goBackBtn');
   const gameOverOverlay = document.getElementById('gameOverOverlay');
   const levelSelect = document.getElementById('levelSelect');
-  const startGameBtn = document.getElementById('startGameBtn');
 
-  startGameBtn.addEventListener('click', () => {
-  levelSelect.style.display = 'none';
-  startGameBtn.style.display = 'none';
-  });
+
+  function startGame() {
+  // 1. Hide the Start Game button
+  document.getElementById('startGameBtn').style.display = 'none';
+
+  // 2. Reset game state
+  score = 0;
+  streak = 0;
+  currentQuestionIndex = 0;
+  updateScoreDisplay();  // custom function you define
+  updateStreakDisplay(); // custom function
+
+  // 3. Start the timer
+  startTimer(); // assumes you have a timer function
+
+  // 4. Load the first question
+  showNextQuestion(); // your question-handling function
+
+  // 5. Reset or show any UI you need
+  document.getElementById('statusContainer').style.display = 'flex';
+
+  // 6. Start star animation if not already running
+  if (!starAnimationStarted) {
+    animateStars(); // from your stars.js
+    starAnimationStarted = true;
+  }
+}
+
+function startTimer() {
+  timeLeft = 30;
+  document.getElementById('timer').textContent = `Time: ${timeLeft}`;
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    document.getElementById('timer').textContent = `Time: ${timeLeft}`;
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      endGame(); // define this separately
+    }
+  }, 1000);
+}
 
 
   goBackBtn.addEventListener('click', () => {
-    gameOverOverlay.style.display = 'none';
+  window.location.href = 'selectGame.html';
+});
 
-    // Show the level selector and start button again
-    levelSelect.style.display = 'inline-block';
-    startGameBtn.style.display = 'inline-block';
-
-    // Optionally reset other UI elements if needed
-  });
   const restartBtn = document.getElementById('restartBtn');
   restartBtn.addEventListener('click', () => {
   hideGameOver();
