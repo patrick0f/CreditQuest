@@ -1,7 +1,6 @@
 window.onload = function () {
   // get DOM elements
-  const canvas = document.getElementById('creditClimberCanvas');
-  const ctx = canvas.getContext('2d');
+  const canvas = document.getElementById("creditClimberCanvas");
   const btnGood = document.getElementById('btnGood');
   const btnBad = document.getElementById('btnBad');
   const questionText = document.getElementById('question');
@@ -9,73 +8,40 @@ window.onload = function () {
   const playerImage = document.getElementById('playerImage');
   const timerText = document.getElementById('timer');
   let streak = 0;
-  const meterFill = document.getElementById('meterFill');
-  const streakCount = document.getElementById('streakCount');
-  const starCanvas = document.getElementById('starCanvas');
-  const starCtx = starCanvas.getContext('2d');
-
-  startGameBtn.addEventListener('click', () => {
-  startGame(); // call the main function
-  levelSelect.style.display = 'none';
-  startGameBtn.style.display = 'none';
-});
-
-
-  function resizeStarCanvas() {
-    starCanvas.width = window.innerWidth;
-    starCanvas.height = window.innerHeight;
-  }
-  resizeStarCanvas();
-  window.addEventListener('resize', () => {
-    resizeCanvas();
-    resizeStarCanvas();
-  });
-
-  // Create stars array
-  const stars = [];
-  const numStars = 100;
-  for (let i = 0; i < numStars; i++) {
-    stars.push({
-      x: Math.random() * starCanvas.width,
-      y: Math.random() * starCanvas.height,
-      radius: Math.random() * 1.5 + 0.5,
-      alpha: Math.random(),
-      delta: (Math.random() * 0.02) + 0.005
-    });
-  }
-
-  function animateStars() {
-    starCtx.clearRect(0, 0, starCanvas.width, starCanvas.height);
-    for (let star of stars) {
-      star.alpha += star.delta;
-      if (star.alpha <= 0 || star.alpha >= 1) {
-        star.delta = -star.delta;
-      }
-      starCtx.beginPath();
-      starCtx.arc(star.x, star.y, star.radius, 0, 2 * Math.PI);
-      starCtx.fillStyle = `rgba(255, 255, 255, ${star.alpha})`;
-      starCtx.fill();
-    }
-    requestAnimationFrame(animateStars);
-  }
-  animateStars();
-
-
-
-
-
-
-  //canvas size to fit window
+  const ctx = canvas.getContext("2d");
+  // Make sure canvas is resized first
   function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
   }
   resizeCanvas();
   window.addEventListener('resize', resizeCanvas);
+  const meterFill = document.getElementById('meterFill');
+  const streakCount = document.getElementById('streakCount');
+  const startGameBtn = document.getElementById('startGameBtn');
+  startGameBtn.addEventListener('click', () => {
+  startGame(); // call the main function
+  levelSelect.style.display = 'none';
+  startGameBtn.style.display = 'none';
+});
 
-  function shuffleArray(arr) {
-    return arr.sort(() => Math.random() - 0.5);
-  }
+  window.addEventListener('DOMContentLoaded', () => {
+    const canvas = document.getElementById("starCanvas");
+
+    if (!canvas) {
+      console.error("Canvas with id 'starCanvas' not found.");
+      return;
+    }
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    resizeCanvas(); // Call once initially
+    window.addEventListener('resize', resizeCanvas); // Call again when resized
+  });
+
 
   // Level 0: Beginner
   const level0 = [
@@ -161,7 +127,7 @@ window.onload = function () {
     height: 15
   }];
 
-  let playerX = platforms[0].x + (platforms[0].width - 40) / 2;
+  let playerX = platforms[0].x + (platforms[0].width / 2) - (40 / 2);
   let playerY = platforms[0].y - 40;
   let velocityX = 0;
   let velocityY = 0;
@@ -252,9 +218,15 @@ window.onload = function () {
   function addPlatform() {
     const last = platforms[platforms.length - 1];
     const newY = last.y - 40;
-    platforms.push({ x: last.x, y: newY, width: platformWidth, height: 15 });
+    const shiftAmount = (Math.random() - 0.5) * 100; // Random shift between -50 and +50 pixels
+    let newX = last.x + shiftAmount;
 
+    // Make sure the platform stays within canvas boundaries:
+    newX = Math.max(0, Math.min(newX, canvas.width - platformWidth));
+
+    platforms.push({ x: newX, y: newY, width: platformWidth, height: 15 });
   }
+
 
   function animatePlatformBreak(platform) {
     let frames = 10;
@@ -468,11 +440,6 @@ function handleTimeout() {
   // 5. Reset or show any UI you need
   document.getElementById('statusContainer').style.display = 'flex';
 
-  // 6. Start star animation if not already running
-  if (!starAnimationStarted) {
-    animateStars(); // from your stars.js
-    starAnimationStarted = true;
-  }
 }
 
 function startTimer() {

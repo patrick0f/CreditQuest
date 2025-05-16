@@ -6,11 +6,7 @@
   <link rel="stylesheet" href="css/creditClimber.css" />
 </head>
 <body>
-
-  <!-- Game canvas -->
-<canvas id="starCanvas" style="position: fixed; top: 0; left: 0; z-index: 0;"></canvas>
-<canvas id="creditClimberCanvas" style="position: fixed; top: 0; left: 0; z-index: 1;"></canvas>
-
+  <canvas id="creditClimberCanvas"></canvas>
 
 
   <!-- Overlay for "Time's Up" message -->
@@ -108,14 +104,11 @@
   </div>
 
 
-  <!-- Game logic -->
-  <script src="js/creditClimber.js"></script>
-  <script src="js/stars.js"></script>
 
 
   		</footer>
 
-   
+
   <!-- Level Selector -->
     <select id="levelSelect" style="margin: 10px; font-size: 16px;">
     <option value="beginner">Beginner</option>
@@ -124,6 +117,10 @@
   </select>
   <!-- Start Game Button -->  
   <button id="startGameBtn" style="font-size: 16px; padding: 5px 15px;">Start Game</button>
+
+  <!-- Game logic (moved here!) -->
+  <script src="js/creditClimber.js"></script>
+
 
 
     <!-- ========================= footer end ========================= -->
