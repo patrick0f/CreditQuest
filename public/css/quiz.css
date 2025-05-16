@@ -103,9 +103,15 @@ button:hover {
   margin-right: auto;
 }
 
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
 #mascot-image {
   height: 180px;
   width: auto;
+  animation: float 3s ease-in-out infinite;
 }
 
 #speech-bubble {
