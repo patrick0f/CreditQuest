@@ -188,8 +188,7 @@ window.onload = function () {
 
       if (platforms.length === 0) {
         setTimeout(() => {
-          alert(`Game Over! Your final score: ${score}`);
-          resetGame();
+          showGameOver();
         }, 100);
       } else {
         playerY = platforms[platforms.length - 1].y - 40;
@@ -227,10 +226,45 @@ function resetGame() {
 }
 
 
-  function handleTimeout() {
-    alert("Time's up!");
+function handleTimeout() {
+  const overlay = document.getElementById('overlay');
+  overlay.classList.add('show');
+  overlay.style.display = 'flex'; // make it visible
+
+  btnGood.disabled = true;
+  btnBad.disabled = true;
+
+  setTimeout(() => {
+    overlay.classList.remove('show');
+    overlay.style.display = 'none';
     answer(false);
+    btnGood.disabled = false;
+    btnBad.disabled = false;
+  }, 2000);
+}
+
+  const gameOverOverlay = document.getElementById('gameOverOverlay');
+  const restartBtn = document.getElementById('restartBtn');
+  restartBtn.addEventListener('click', () => {
+  hideGameOver();
+  });
+
+
+  function showGameOver() {
+    gameOverOverlay.style.display = 'flex';
+    btnGood.disabled = true;
+    btnBad.disabled = true;
+    stopTimer();
   }
+
+  function hideGameOver() {
+    gameOverOverlay.style.display = 'none';
+    btnGood.disabled = false;
+    btnBad.disabled = false;
+    resetGame();
+    resetTimer();
+  }
+
 
   // initialize game after image loads
   if (playerImage.complete) {
@@ -249,6 +283,9 @@ function resetGame() {
     };
   }
 
+
   btnGood.addEventListener('click', () => answer(true));
   btnBad.addEventListener('click', () => answer(false));
 };
+
+

@@ -80,6 +80,37 @@ button:hover {
   border-radius: 5px;
 }
 
+#overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  justify-content: center;
+  align-items: center;
+}
+
+#timeoutMessage {
+  background: #ff4d4d;
+  color: white;
+  padding: 25px 50px;
+  font-size: 28px;
+  font-weight: bold;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.4);
+  opacity: 0;
+  transform: scale(0.95);
+  transition: all 0.3s ease;
+}
+
+#overlay.show #timeoutMessage {
+  opacity: 1;
+  transform: scale(1);
+}
+
+
 #question {
   font-size: 20px;
   font-weight: bold;
