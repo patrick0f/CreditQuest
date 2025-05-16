@@ -86,6 +86,21 @@ document.addEventListener('DOMContentLoaded', () => {
     Here are their answers: ${answers.entries}
     Give them a short, friendly 2-sentence summary with encouragement and one tip for improvement.`;
 
-    await callChatGPT(prompt);
+    const summaryDiv = document.getElementById("summary");
+
+    const response = await callChatGPT(prompt);
+
+    const continueBtn = document.getElementById("continue-button");
+
+    if (response) {
+      summaryDiv.textContent = response;
+      summaryDiv.style.display = "block";
+      continueBtn.style.display = "inline-block";
+    }
+
+  continueBtn.addEventListener("click", () => {
+    window.location.href = "selectGame.html"; // Adjust path if needed
+  });
+
     });
 });
