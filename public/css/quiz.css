@@ -133,3 +133,36 @@ button:hover {
   border-bottom: 15px solid transparent;
   border-right: 20px solid #3366cc;
 }
+
+#site-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+#site-logo {
+  height: 80px;
+  width: auto;
+}
+
+.question label {
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.question label:hover {
+  background-color: #e3f0ff;
+  transform: scale(1.02);
+}
+
+#progress-bar {
+  height: 8px;
+  width: 0%;
+  background-color: #3366cc; /* Capital One blue */
+  transition: width 0.4s ease-in-out;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+}

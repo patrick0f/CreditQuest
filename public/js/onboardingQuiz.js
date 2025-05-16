@@ -23,10 +23,29 @@ async function callChatGPT(prompt) {
   }
 }
 
+function updateProgressBar() {
+  const totalQuestions = 5;
+  const answered = new Set();
+
+  // loop through all selected answers
+  document.querySelectorAll('input[type="radio"]:checked').forEach(input => {
+    answered.add(input.name); // each question has a unique name (q1, q2, etc)
+  });
+
+  const percent = (answered.size / totalQuestions) * 100;
+  document.getElementById("progress-bar").style.width = `${percent}%`;
+}
+
 // after HTML loads
 document.addEventListener('DOMContentLoaded', () => {
 
-    const form = document.getElementById('quiz-form');       
+    const form = document.getElementById('quiz-form');      
+    
+    const allRadios = document.querySelectorAll('input[type="radio"]');
+
+    allRadios.forEach(radio => {
+      radio.addEventListener('change', updateProgressBar);
+    });
       
     // when form is submitted
     form.addEventListener('submit', async (e) => {
@@ -60,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // stores starting diff. level
-        localStorage.setItem('creditLevel', level);
+        localStorage.setItem('creditLevel', level);        
 
         const prompt = `A user took a credit knowledge quiz and scored ${score}/5.
         Here are the questions:
@@ -102,6 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
   continueBtn.addEventListener("click", () => {
     window.location.href = "selectGame.html"; // Adjust path if needed
   });
+
 
     });
 });
