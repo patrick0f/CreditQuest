@@ -1,0 +1,80 @@
+/* Reset and body styling */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f5faff;
+  margin: 0;
+  padding: 40px 20px;
+  text-align: center;
+  color: #1a1a1a;
+}
+
+/* Header */
+h1 {
+  font-size: 32px;
+  margin-bottom: 20px;
+  color: #254b9c;
+}
+
+/* Level display */
+#level-display {
+  font-size: 20px;
+  font-weight: bold;
+  color: #3366cc;
+  margin-bottom: 40px;
+}
+
+/* Game container layout */
+.game-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin-top: 20px;
+}
+
+/* Individual game card */
+.game-card {
+  background-color: white;
+  border: 2px solid #e0e0e0;
+  padding: 30px 20px;
+  width: 240px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s, box-shadow 0.3s;
+}
+
+.game-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.game-card h3 {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 16px;
+}
+
+/* Play buttons */
+.game-button {
+  background-color: #3366cc;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.game-button:hover {
+  background-color: #254b9c;
+  transform: scale(1.05);
+}
+
+/* Optional: achievements styling */
+#achievements {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #555;
+}
+

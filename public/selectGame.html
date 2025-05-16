@@ -3,70 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <title>Select a Game</title>
-  <link rel="stylesheet" href="styles.css"> 
-  <!-- UPDATE: move style stuff into css file. this is just for testing -->
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 40px;
-      text-align: center;
-    }
-
-    #level-display {
-      font-size: 20px;
-      margin-bottom: 30px;
-      font-weight: bold;
-    }
-
-    .game-container {
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      margin-top: 40px;
-    }
-
-    .game-card {
-      border: 1px solid #ccc;
-      padding: 20px;
-      width: 200px;
-      border-radius: 10px;
-      transition: box-shadow 0.2s;
-    }
-
-    .game-card:hover {
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    }
-
-    .game-card h3 {
-      margin-bottom: 10px;
-    }
-
-    .game-button {
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-  </style>
+  <link rel="stylesheet" href="css/selectGame.css"> 
+  
 </head>
 <body>
-
+<div class="page-wrapper">
   <h1>Select a Game</h1>
   <div id="achievements"></div>
   <div id="level-display">Loading your level...</div>
 
   <div class="game-container">
     <div class="game-card">
-      <h3>Credit Climber</h3>
+      <h3>📈 Credit Climber</h3>
       <button class="game-button" data-game="creditClimber.html">Play</button>
     </div>
     <div class="game-card">
-      <h3>Credit Cards</h3>
+      <h3>💳 Credit Cards</h3>
       <button class="game-button" data-game="cardGame.html">Play</button>
     </div>
     <div class="game-card">
-      <h3>Game 3</h3>
+      <h3>🎯 Game 3</h3>
       <button class="game-button" data-game="game3.html">Play</button>
     </div>
+  </div>
   </div>
 
   <script src="js/selectGame.js"></script>
