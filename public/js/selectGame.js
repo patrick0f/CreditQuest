@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 async function getUserAchievements(username) {
     try {
       const response = await fetch(`http://localhost:8080/api/v1/auth/achievements/${username}`, {
@@ -37,21 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
     
-=======
-const user = await User.findOne({username});
-document.addEventListener('DOMContentLoaded', () => {
-    const levelDisplay = document.getElementById('level-display');
-    const creditLevel = localStorage.getItem('creditLevel') || 'beginner';
-    let achievements = document.getElementById("achievements");
-
-    let userachievements = user.achievements;
-
-    for (let i = 0; i < 3; i++) {
-        if (userachievements[i].unlocked) {
-            achievements.innerHTML += `<img src='img/badge${i+1}'></img>`;
-        }
-    }
->>>>>>> Stashed changes
 
     // display the assigned level
     levelDisplay.textContent = `You've been placed at the ${creditLevel.toUpperCase()} level. Choose a game to begin!`;
