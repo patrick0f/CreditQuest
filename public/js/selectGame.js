@@ -24,7 +24,10 @@ async function getUserAchievements(username) {
 document.addEventListener('DOMContentLoaded', () => {
     const levelDisplay = document.getElementById('level-display');
     const creditLevel = localStorage.getItem('creditLevel') || 'beginner';
+    const name = localStorage.getItem("user") || "John Smith";
     let achievementsContainer = document.getElementById("achievements");
+    let nameContainer = document.getElementById("name");
+    nameContainer.textContent = name;
 
     getUserAchievements(localStorage.getItem("user")).then(achievements => {
         console.log(achievements);
