@@ -60,7 +60,7 @@ form.addEventListener("submit", async (e) => {
     submitBtn.disabled = true;
     try {
         let user = await registerUser();
-        if (user && user.token) window.location.href = "selectGame.html";
+        if (user && user.token) window.location.href = "onboardingQuiz.html";
     }
     catch (error) {
         console.log(error);
